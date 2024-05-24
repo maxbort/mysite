@@ -27,7 +27,7 @@ public class GuestBookDao {
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 
 			//3. Statement 준비
-			String sql = "insert into user(name, password, content, reg_date) values(?, ?, ?, now())";
+			String sql = "insert into guestbook(name, password, contents, reg_date) values(?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
 			
 			//4. binding
@@ -128,7 +128,7 @@ public class GuestBookDao {
 
 			//3. Statement 준비
 			String sql =
-				"   select no, name, content, reg_date" + 
+				"   select no, name, contents, reg_date" + 
 			    "     from guestbook" + 
 				" order by no desc";
 			pstmt = conn.prepareStatement(sql);
