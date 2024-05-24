@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!doctype html>
 <html>
 <head>
 <title>mysite</title>
@@ -19,32 +20,15 @@
 		</div>
 		<div id="content">
 			<div id="user">
-
-				<form id="join-form" name="joinForm" method="" action="">
-					<label class="block-label" for="name">이름</label>
-					<input id="name" name="name" type="text" value="">
-
+				<form id="login-form" name="loginform" method="post" action="/user?a=login">
 					<label class="block-label" for="email">이메일</label>
 					<input id="email" name="email" type="text" value="">
-					<input type="button" value="id 중복체크">
-					
-					<label class="block-label">패스워드</label>
+					<label class="block-label" >패스워드</label>
 					<input name="password" type="password" value="">
-					
-					<fieldset>
-						<legend>성별</legend>
-						<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
-						<label>남</label> <input type="radio" name="gender" value="male">
-					</fieldset>
-					
-					<fieldset>
-						<legend>약관동의</legend>
-						<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
-						<label>서비스 약관에 동의합니다.</label>
-					</fieldset>
-					
-					<input type="submit" value="가입하기">
-					
+					<p>
+						로그인이 실패 했습니다.
+					</p>
+					<input type="submit" value="로그인">
 				</form>
 			</div>
 		</div>
@@ -56,7 +40,7 @@
 			</ul>
 		</div>
 		<div id="footer">
-			<p>(c)opyright 2015, 2016, 2017, 2018</p>
+			<p>(c)opyright 2024</p>
 		</div>
 	</div>
 </body>

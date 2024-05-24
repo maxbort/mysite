@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.poscodx</groupId>
   <artifactId>mysite</artifactId>
@@ -8,4 +8,19 @@
   <modules>
   	<module>mysite2</module>
   </modules>
+  
+  <build>
+		<finalName>mysite2</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+		    	<artifactId>tomcat7-maven-plugin</artifactId>
+		    	<version>2.2</version>
+		    	<configuration>
+					<url>${tomcat.deploy.url}</url>
+					<server>tomcat-poscodx</server>
+				</configuration>
+			</plugin>
+		</plugins>		
+	</build>	
 </project>
