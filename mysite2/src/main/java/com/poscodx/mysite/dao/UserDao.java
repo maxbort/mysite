@@ -28,9 +28,7 @@ public class UserDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		try (
-				
-				){
+		try {
 			//1. JDBC Driver 로딩
 			Class.forName("org.mariadb.jdbc.Driver");
 			
@@ -39,19 +37,20 @@ public class UserDao {
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 
 			//3. Statement 준비
-			String sql = "insert user values(null,?,?,password(?),? ,?);\r\n");
+			String sql = "insert user values(null,?,?,password(?),? ,?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			//4. binding
 			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getContent());
+			pstmt.setString(2, vo.getEmail());
+			pstmt.setString(3, vo.getPassword());
+			pstmt.setString(4, vo.getGender());
+			pstmt.setString(5, vo.getJoinDate());
 			
 			//5. SQL 실행
-			int count = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
-			//6. 결과 처리
-			result = count == 1;
+		
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
@@ -72,7 +71,7 @@ public class UserDao {
 		}
 		
 		return result;
-	}
+	
 	}
 	
 	
