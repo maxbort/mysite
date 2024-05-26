@@ -12,100 +12,75 @@ import com.poscodx.mysite.vo.GuestBookVo;
 
 
 public class GuestBookDao {
-
-	public boolean insert(GuestBookVo vo) {
-		boolean result = false;
+	
+	private Connection getConnection() throws SQLException{
 		Connection conn = null;
-		PreparedStatement pstmt = null;
 		
 		try {
-			//1. JDBC Driver 로딩
 			Class.forName("org.mariadb.jdbc.Driver");
 			
-			//2. 연결하기
 			String url = "jdbc:mariadb://192.168.0.198:3306/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 
-			//3. Statement 준비
-			String sql = "insert into guestbook(name, password, contents, reg_date) values(?, ?, ?, now())";
-			pstmt = conn.prepareStatement(sql);
+		} catch(ClassNotFoundException e) {
+			System.out.println("드라이버 로딩 실패: "+ e);
+		}
+		
+		return conn;
+	}
+
+	public int insert(GuestBookVo vo) {
+		int result = 0;
+		
+		try(
+				Connection conn = getConnection();
+				PreparedStatement pstmt1 = conn.prepareStatement("insert into guestbook(name, password, contents, reg_date) values(?, ?, ?, now())");
+				PreparedStatement pstmt2 = conn.prepareStatement("select last_insert_id() from dual");
+				)
+		
+		
+		{
 			
-			//4. binding
-			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getContent());
+			pstmt1.setString(1, vo.getName());
+			pstmt1.setString(2, vo.getPassword());
+			pstmt1.setString(3, vo.getContent());
 			
-			//5. SQL 실행
-			int count = pstmt.executeUpdate();
+			result = pstmt1.executeUpdate();
 			
-			//6. 결과 처리
-			result = count == 1;
+			ResultSet rs = pstmt2.executeQuery();
+			vo.setNo(rs.next() ? rs.getLong(1):null);
+			rs.close();
 			
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				
-				if(conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		
 		return result;
 	}
 
-	public boolean deleteByNo(Long no, String password) {
-		boolean result = false;
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			//1. JDBC Driver 로딩
-			Class.forName("org.mariadb.jdbc.Driver");
-			
-			//2. 연결하기
-			String url = "jdbc:mariadb://192.168.0.198:3306/webdb?charset=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
+	
 
-			//3. Statement 준비
-			String sql = "delete from guestbook where no = ? and password = ?";
-			pstmt = conn.prepareStatement(sql);
+	public int deleteByNo(Long no, String password) {
+		int result = 0;
+		
+
+		
+		try(
+				Connection conn = getConnection();	
+				PreparedStatement pstmt = conn.prepareStatement("delete from guestbook where no = ? and password = ?");
+		
+		) {
+			
 
 			//4. binding
 			pstmt.setLong(1, no);
 			pstmt.setString(2, password);
 			
-			//4. SQL 실행
-			int count = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
-			//5. 결과 처리
-			result = count == 1;
 			
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				
-				if(conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		
 		return result;
@@ -114,29 +89,18 @@ public class GuestBookDao {
 	public List<GuestBookVo> findAll() {
 		List<GuestBookVo> result = new ArrayList<>();
 
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			//1. JDBC Driver 로딩
-			Class.forName("org.mariadb.jdbc.Driver");
-			
-			//2. 연결하기
-			String url = "jdbc:mariadb://192.168.0.198:3306/webdb?charset=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
+		try(
+				Connection conn = getConnection();	
+				PreparedStatement pstmt = conn.prepareStatement(
+						"   select no, name, contents, reg_date" + 
+							    "     from guestbook" + 
+								" order by reg_date desc"
+						);
+				ResultSet rs = pstmt.executeQuery();
 
-			//3. Statement 준비
-			String sql =
-				"   select no, name, contents, reg_date" + 
-			    "     from guestbook" + 
-				" order by no desc";
-			pstmt = conn.prepareStatement(sql);
+		
+		) {
 			
-			//4. binding
-			
-			//5. SQL 실행
-			rs = pstmt.executeQuery();
 			
 			//6. 결과 처리
 			while(rs.next()) {
@@ -153,26 +117,8 @@ public class GuestBookDao {
 				
 				result.add(vo);
 			}
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				
-				if(conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		
 		return result;
