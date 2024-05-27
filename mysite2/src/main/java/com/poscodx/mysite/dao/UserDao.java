@@ -84,5 +84,80 @@ public class UserDao {
 		
 		return result;
 	}
+
+	public UserVo findByNo(Long no) {
+		UserVo result = null;
+		try (
+				Connection conn = getConnection();
+				PreparedStatement pstmt1 = conn.prepareStatement("select * from user where no = ?");
+				
+		) {
+	
+			pstmt1.setLong(1, no);
+
+						
+			ResultSet rs = pstmt1.executeQuery();
+			if(rs.next()) {
+				String name = rs.getString(2);
+				String email = rs.getString(3);
+				String gender = rs.getString(5);
+
+				result = new UserVo();
+				result.setNo(no);
+				result.setName(name);
+				result.setEmail(email);
+				result.setGender(gender);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		return result;
+	}
+
+	public int update(UserVo vo) {
+		int result = 0;
+		
+		try(
+				Connection conn = getConnection();
+				PreparedStatement pstmt1 = conn.prepareStatement("update user set name = ?, password = password(?), gender = ? where no = ?");
+				PreparedStatement pstmt2 = conn.prepareStatement("update user set name = ?, gender = ? where no = ?");
+
+		){
+			
+			System.out.println(vo.getName() + vo.getNo() + vo.getEmail());
+			if (vo.getPassword() == "") {
+				pstmt2.setString(1, vo.getName());
+				pstmt2.setString(2, vo.getGender());
+				pstmt2.setLong(3, vo.getNo());
+				result = pstmt2.executeUpdate();
+				ResultSet rs = pstmt2.executeQuery();
+				vo.setNo(rs.next() ? rs.getLong(1): null);
+				rs.close();
+
+			}
+	
+			else {
+				pstmt1.setString(1, vo.getName());
+				pstmt1.setString(2, vo.getPassword());
+				pstmt1.setString(3, vo.getGender());
+				pstmt1.setLong(4,  vo.getNo());
+				//pstmt1.setString(5, vo.getJoinDate());
+				result = pstmt1.executeUpdate();
+				ResultSet rs = pstmt1.executeQuery();
+				vo.setNo(rs.next() ? rs.getLong(1): null);
+				rs.close();
+			}
+			
+			//5. SQL 실행
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		return result;
+		
+	}
 	
 }
