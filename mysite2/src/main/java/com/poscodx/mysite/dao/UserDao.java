@@ -15,7 +15,7 @@ public class UserDao {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			
-			String url = "jdbc:mariadb://192.168.0.203:3306/webdb?charset=utf8";
+			String url = "jdbc:mariadb://192.168.0.198:3306/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
@@ -29,7 +29,7 @@ public class UserDao {
 		
 		try(
 				Connection conn = getConnection();
-				PreparedStatement pstmt1 = conn.prepareStatement("insert user values(null,?,?,password(?),? ,?)");
+				PreparedStatement pstmt1 = conn.prepareStatement("insert user values(null,?,?,password(?),? ,current_date())");
 				PreparedStatement pstmt2 = conn.prepareStatement("select last_insert_id() from dual");
 				
 		){
@@ -38,7 +38,7 @@ public class UserDao {
 			pstmt1.setString(2, vo.getEmail());
 			pstmt1.setString(3, vo.getPassword());
 			pstmt1.setString(4, vo.getGender());
-			pstmt1.setString(5, vo.getJoinDate());
+			//pstmt1.setString(5, vo.getJoinDate());
 			
 			//5. SQL 실행
 			result = pstmt1.executeUpdate();
@@ -54,5 +54,35 @@ public class UserDao {
 	
 	}
 	
+
+	public UserVo findByNoAndPassword(String email, String password) {
+		UserVo result = null;
+		
+		try (
+				Connection conn = getConnection();
+				PreparedStatement pstmt1 = conn.prepareStatement("select no, name from user where email = ? and password = password(?)");
+				
+		) {
+	
+			pstmt1.setString(1, email);
+			pstmt1.setString(2, password);
+
+						
+			ResultSet rs = pstmt1.executeQuery();
+			if(rs.next()) {
+				Long no =rs.getLong(1);
+				String name = rs.getString(2);
+				
+				result = new UserVo();
+				result.setNo(no);
+				result.setName(name);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		return result;
+	}
 	
 }

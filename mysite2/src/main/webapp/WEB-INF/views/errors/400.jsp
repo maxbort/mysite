@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>400 Not Found</h1>
 </body>
 </html>
