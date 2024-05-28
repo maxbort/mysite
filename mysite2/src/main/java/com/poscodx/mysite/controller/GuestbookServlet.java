@@ -15,8 +15,7 @@ public class GuestbookServlet extends ActionServlet {
 	private Map<String, Action> mapAction = Map.of(
 			"add", new AddAction(),
 			"deleteform", new DeleteFormAction(),
-			"delete", new DeleteAction(),
-			"list", new GuestMain()
+			"delete", new DeleteAction()
 			);
 			
 //
