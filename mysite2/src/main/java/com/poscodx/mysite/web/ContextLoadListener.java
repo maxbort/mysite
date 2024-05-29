@@ -14,7 +14,7 @@ public class ContextLoadListener implements ServletContextListener {
 	
     public void contextInitialized(ServletContextEvent sce)  { 
     	ServletContext sc = sce.getServletContext();
-    	String contextConfigLocation = sc.getInitParameter("conte!!!````;");
+    	String contextConfigLocation = sc.getInitParameter("contextConfigLocation");
     	
     	
     	System.out.println("Application[Mysite2] starts..." + contextConfigLocation);
