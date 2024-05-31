@@ -14,7 +14,6 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
-
 				<form id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath}/user">
 					<input type='hidden' name="a" value="update">
 					<input type="hidden" name="no" value="${userVo.no }">
