@@ -37,12 +37,14 @@ public class ReplyAction implements Action {
 		Integer o_no = Integer.parseInt(request.getParameter("o_no"));
 		Integer depth = Integer.parseInt(request.getParameter("depth"));
 		
+		o_no += 1;
 		
+		new BoardDao().replyBeforeUpdate(g_no,o_no);
 		BoardVo vo1 = new BoardVo();
 		vo1.setTitle(title);
 		vo1.setContents(contents);
 		vo1.setG_no(g_no);
-		vo1.setO_no(o_no+1);
+		vo1.setO_no(o_no);
 		vo1.setDepth(depth+1);
 		
 		Long no = (authUser.getNo());

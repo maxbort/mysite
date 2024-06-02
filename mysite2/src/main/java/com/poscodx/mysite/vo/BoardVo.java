@@ -2,16 +2,20 @@ package com.poscodx.mysite.vo;
 
 public class BoardVo {
 
-	Long no;
-	String title;
-	String contents;
-	int hit;
-	String reg_date;
-	int g_no;
-	int o_no;
-	int depth;
-	Long user_no;
-	String user_name;
+	private Long no;
+	private String title;
+	private String contents;
+	private int hit;
+	private String reg_date;
+	private int g_no;
+	private int o_no;
+	private int depth;
+	private Long user_no;
+	private String user_name;
+	
+	
+	
+	
 	public String getUser_name() {
 		return user_name;
 	}

@@ -17,10 +17,10 @@ public class BoardDao {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			
-//			String url = "jdbc:mariadb://192.168.0.198:3306/webdb?charset=utf8";
+			String url = "jdbc:mariadb://192.168.0.198:3306/webdb?charset=utf8";
 //			String url = "jdbc:mariadb://192.168.30.207:3306/webdb?charset=utf8";
 
-			String url = "jdbc:mariadb://192.168.219.104:3306/webdb?charset=utf8";
+//			String url = "jdbc:mariadb://192.168.219.104:3306/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 
 		} catch(ClassNotFoundException e) {
@@ -282,6 +282,24 @@ public class BoardDao {
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
+		
+		return result;
+	}
+	
+	public int replyBeforeUpdate(int g_no, int o_no) {
+		int result = 0;
+		
+		try (
+			Connection conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("update board set o_no = o_no + 1 "
+															+ "where g_no = ? and o_no >= ?");
+		) {
+			pstmt.setInt(1, g_no);
+			pstmt.setInt(2, o_no);
+			result = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			System.out.println("error: " + e);
+		} 
 		
 		return result;
 	}
