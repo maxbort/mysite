@@ -12,7 +12,7 @@ import com.poscodx.mysite.dao.BoardDao;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
 
-public class WriteAction implements Action{
+public class ReplyAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,16 +33,22 @@ public class WriteAction implements Action{
 		
 		String title = request.getParameter("title");
 		String contents = request.getParameter("content");
+		Integer g_no = Integer.parseInt(request.getParameter("g_no"));
+		Integer o_no = Integer.parseInt(request.getParameter("o_no"));
+		Integer depth = Integer.parseInt(request.getParameter("depth"));
+		
 		
 		BoardVo vo1 = new BoardVo();
-		
 		vo1.setTitle(title);
 		vo1.setContents(contents);
+		vo1.setG_no(g_no);
+		vo1.setO_no(o_no+1);
+		vo1.setDepth(depth+1);
 		
 		Long no = (authUser.getNo());
 		vo1.setUser_no(no);
 		
-		new BoardDao().insert(vo1);
+		new BoardDao().reply(vo1);
 		response.sendRedirect(request.getContextPath() +"/board");
 	}
 

@@ -40,7 +40,7 @@ public class ModifyAction implements Action {
 		BoardVo vo = new BoardVo();
 		vo.setNo(Long.parseLong(no));
 		vo.setTitle(request.getParameter("title"));
-		vo.setContents(request.getParameter("contents"));
+		vo.setContents(request.getParameter("content"));
 		vo.setUser_no(authUser.getNo());
 
 		new BoardDao().update(vo);

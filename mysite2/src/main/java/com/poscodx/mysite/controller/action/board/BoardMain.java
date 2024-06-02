@@ -31,7 +31,8 @@ public class BoardMain implements Action {
 			return;
 		}
 		
-		List<BoardVo> list = new BoardDao().findAll();
+	
+		List<BoardVo> list = new BoardDao().findAll("");
 		
 		request.setAttribute("list", list);
 		request.setAttribute("authUser", authUser);

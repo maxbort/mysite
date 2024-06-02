@@ -7,6 +7,7 @@ public class UserVo {
 	private String password;
 	private String gender;
 	private String joinDate;
+
 	
 	@Override
 	public String toString() {
@@ -49,5 +50,12 @@ public class UserVo {
 	public void setJoinDate(String joinDate) {
 		this.joinDate = joinDate;
 	}
+	 public boolean hasField(String fieldName) {
+	        try {
+	            return this.getClass().getDeclaredField(fieldName) != null;
+	        } catch (NoSuchFieldException e) {
+	            return false;
+	        }
+	    }
 	
 }

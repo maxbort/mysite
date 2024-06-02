@@ -15,10 +15,11 @@
 		
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board" method="get">
-					<input type="text" id="kwd" name="kwd" value="">
-					<input type="submit" value="찾기">
-				</form>
+                <form id="search" action="${pageContext.servletContext.contextPath}/board" method="post">
+                	<input type="hidden" name ="a" value="search">
+                    <input type="text" id="kwd" name="kwd">
+                    <input type="submit" value="찾기">
+                </form>
 				<table class="tbl-ex">
 					<tr>
 						<th>번호</th>
@@ -29,19 +30,24 @@
 						<th>&nbsp;</th>
 					</tr>			
 					<c:set var="count" value="${fn.length(list) }"/>
-					<c:forEach items="${list }" var="vo" varStatus="status">
+					<c:forEach items='${list }' var='vo' varStatus="status">
 						<tr>
-							<td>[${status.index }]</td>
-							<td><a href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}">${vo.title }</a></td>
-							<td>${vo.user_no }</td>
-							<td> ${vo.hit }</td>
-							<td>${vo.reg_date }</td>
-							<td>
-								<c:if test="${authUser.no == vo.user_no }">
-									<a href="${pageContext.request.contextPath}/board?a=delete&no=${vo.no}&user_no=${authUser.no}">삭제</a>
-								</c:if>
+							<td>${status.index + 1 }</td>	
+							<td style="text-align:left; padding-left:${20*vo.depth }px">
+							<c:if test='${vo.depth > 0 }'>
+								<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/>
+								
+							</c:if>
+								<a href="${pageContext.request.contextPath}/board?a=view&no=${vo.no }">${vo.title }</a>
 							</td>
-						</tr>
+							<td>${vo.user_name }</td>
+							<td>${vo.hit }</td>
+							<td>${vo.reg_date }</td>
+							
+							<c:if test='${vo.user_no == authUser.no }'>
+								<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}&user_no=${authUser.no}" class="del">삭제</a></td>
+							</c:if>						
+							</tr>
 					</c:forEach>
 									
 				</table>

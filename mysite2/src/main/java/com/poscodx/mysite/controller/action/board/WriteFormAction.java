@@ -28,9 +28,12 @@ public class WriteFormAction implements Action{
 			response.sendRedirect(request.getContextPath()+"/user");
 			return;
 		}
+//		
+		BoardVo vo = new BoardVo();
 		
-		request.setAttribute("vo", authUser);
-		
+		vo.setUser_no(authUser.getNo());
+
+		request.setAttribute("vo", vo);
 //		String title = request.getParameter("title");
 //		String contents = request.getParameter("content");
 //		
@@ -41,7 +44,7 @@ public class WriteFormAction implements Action{
 //		
 //		//Long no = Long.parseLong(request.getParameter("no"));
 //		
-//		new BoardDao().insert(vo1);
+//		new BoardDao().insert(vo);
 		request.getRequestDispatcher("/WEB-INF/views/board/write.jsp").forward(request, response);
 	}
 

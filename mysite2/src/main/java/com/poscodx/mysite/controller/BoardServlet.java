@@ -4,7 +4,11 @@ import java.util.Map;
 
 import com.poscodx.mysite.controller.action.board.BoardMain;
 import com.poscodx.mysite.controller.action.board.DeleteAction;
+import com.poscodx.mysite.controller.action.board.ModifyAction;
 import com.poscodx.mysite.controller.action.board.ModifyFormAction;
+import com.poscodx.mysite.controller.action.board.ReplyAction;
+import com.poscodx.mysite.controller.action.board.ReplyFormAction;
+import com.poscodx.mysite.controller.action.board.SearchAction;
 import com.poscodx.mysite.controller.action.board.ViewAction;
 import com.poscodx.mysite.controller.action.board.WriteAction;
 import com.poscodx.mysite.controller.action.board.WriteFormAction;
@@ -17,7 +21,11 @@ public class BoardServlet extends ActionServlet {
 			"writeform", new WriteFormAction(),
 			"view", new ViewAction(),
 			"delete", new DeleteAction(),
-			"modifyform", new ModifyFormAction()
+			"modifyform", new ModifyFormAction(),
+			"modify", new ModifyAction(),
+			"replyform", new ReplyFormAction(),
+			"reply", new ReplyAction(),
+			"search", new SearchAction()
 
 			);
 			

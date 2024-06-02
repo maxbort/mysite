@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.poscodx.mysite.controller.ActionServlet.Action;
+import com.poscodx.mysite.dao.BoardDao;
+import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
 
 public class ModifyFormAction implements Action{
@@ -26,9 +28,14 @@ public class ModifyFormAction implements Action{
 			response.sendRedirect(request.getContextPath()+"/user");
 			return;
 		}
-		
+		String r_no = request.getParameter("no");
+		BoardVo vo = new BoardVo();
+		String no = request.getParameter("no");
+		Long l_no = Long.parseLong(no);
+		vo = new BoardDao().findView(l_no);
+		request.setAttribute("info", vo);
 		request.setAttribute("vo", authUser);
-		
+		request.setAttribute("r_no", r_no);
 		request.getRequestDispatcher("/WEB-INF/views/board/modify.jsp").forward(request, response);
 
 	}
