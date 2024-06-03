@@ -7,7 +7,6 @@ import com.poscodx.mysite.controller.action.board.DeleteAction;
 import com.poscodx.mysite.controller.action.board.ModifyAction;
 import com.poscodx.mysite.controller.action.board.ModifyFormAction;
 import com.poscodx.mysite.controller.action.board.ReplyAction;
-import com.poscodx.mysite.controller.action.board.ReplyFormAction;
 import com.poscodx.mysite.controller.action.board.SearchAction;
 import com.poscodx.mysite.controller.action.board.ViewAction;
 import com.poscodx.mysite.controller.action.board.WriteAction;
@@ -23,7 +22,6 @@ public class BoardServlet extends ActionServlet {
 			"delete", new DeleteAction(),
 			"modifyform", new ModifyFormAction(),
 			"modify", new ModifyAction(),
-			"replyform", new ReplyFormAction(),
 			"reply", new ReplyAction(),
 			"search", new SearchAction()
 

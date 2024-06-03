@@ -31,8 +31,10 @@ public class DeleteAction implements Action {
 		String password = request.getParameter("user_no");
 
 		new BoardDao().deleteByNo(Long.parseLong(no), authUser.getNo());
-
-		response.sendRedirect(request.getContextPath() + "/board");
+		int current_page = Integer.parseInt(request.getParameter("page_no"));
+		
+		
+		response.sendRedirect(request.getContextPath() + "/board?page_no=1");
 	}
 
 }

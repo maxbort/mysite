@@ -51,6 +51,7 @@
 					<div class="bottom">
 						<a href="${pageContext.request.contextPath}/board?page_no=${page_no }">취소</a>
 						<input type="submit" value="등록">
+						<input type="hidden" name="page_no" value="${page_no }">
 						
 					</div>
 				</form>				
