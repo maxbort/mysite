@@ -36,6 +36,7 @@ public class ModifyFormAction implements Action{
 		request.setAttribute("info", vo);
 		request.setAttribute("vo", authUser);
 		request.setAttribute("r_no", r_no);
+		request.setAttribute("page_no", Integer.parseInt(request.getParameter("page_no")));
 		request.getRequestDispatcher("/WEB-INF/views/board/modify.jsp").forward(request, response);
 
 	}

@@ -44,8 +44,12 @@ public class ModifyAction implements Action {
 		vo.setUser_no(authUser.getNo());
 
 		new BoardDao().update(vo);
+		
+		int a = Integer.parseInt(request.getParameter("page_no"));
+		System.out.println(a);
+		System.out.println(request.getParameter("depth"));
 
-		response.sendRedirect(request.getContextPath() + "/board?a=view&no=" + no);
+		response.sendRedirect(request.getContextPath() + "/board?a=view&no=" + no + "&page_no=" + a);
 	}
 
 	

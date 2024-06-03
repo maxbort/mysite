@@ -51,7 +51,7 @@ public class ReplyAction implements Action {
 		vo1.setUser_no(no);
 		
 		new BoardDao().reply(vo1);
-		response.sendRedirect(request.getContextPath() +"/board");
+		response.sendRedirect(request.getContextPath() +"/board?page_no=1");
 	}
 
 }

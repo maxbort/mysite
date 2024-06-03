@@ -34,6 +34,7 @@ public class WriteFormAction implements Action{
 		vo.setUser_no(authUser.getNo());
 
 		request.setAttribute("vo", vo);
+		request.setAttribute("page_no", request.getParameter("page_no"));
 //		String title = request.getParameter("title");
 //		String contents = request.getParameter("content");
 //		

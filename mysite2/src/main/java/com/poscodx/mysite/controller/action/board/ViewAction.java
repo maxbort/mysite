@@ -30,12 +30,19 @@ public class ViewAction implements Action{
 			return;
 		}
 		
+		int current_page = Integer.parseInt(request.getParameter("page_no"));
+		System.out.println("cur_page = " + current_page);
+		
+		
+		
+		
 		String no = request.getParameter("no");
 		Long no1 = Long.parseLong(no);
 		BoardVo vo = new BoardDao().findView(no1);
 		new BoardDao().hitUp(vo);
 		request.setAttribute("vo", vo);
 		request.setAttribute("authUser", authUser);
+		request.setAttribute("page_no", current_page);
 		request.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(request, response);
 
 	}

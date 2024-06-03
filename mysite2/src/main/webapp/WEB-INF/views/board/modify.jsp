@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+7[]<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
@@ -18,6 +18,7 @@
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
 				<input type = "hidden" name = "a" value="modify">
 				<input type = "hidden" name = "no" value="${info.no }">
+				<input type = "hidden" name = "page_no" value="${page_no }">				
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>
@@ -34,7 +35,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?a=view&no=${r_no}">취소</a>
+						<a href="${pageContext.request.contextPath }/board?a=view&no=${r_no}&page_no=${page_no}">취소</a>
 						<input type="submit" value="수정">
 					</div>
 				</form>				

@@ -62,7 +62,38 @@ public class BoardDao {
 		return result;
 	}
 	
-	public List<BoardVo> findAll(String kwd) {
+	public List<BoardVo> findTotal(){
+		List<BoardVo> result = new ArrayList<>();
+		try(
+				Connection conn = getConnection();	
+				PreparedStatement pstmt = conn.prepareStatement(
+						" select * from board");
+				
+		){
+//			pstmt.setInt(3, offset+5);
+//			pstmt.setInt(4, offset);
+			ResultSet rs = pstmt.executeQuery();
+			
+			//6. 결과 처리
+			while(rs.next()) {
+				Long no = rs.getLong(1);
+				
+				
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				
+				
+				result.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		
+		return result;
+	}
+
+	
+	public List<BoardVo> findAll(String kwd, int offset) {
 		List<BoardVo> result = new ArrayList<>();
 		
 		if(kwd != "") {
@@ -71,11 +102,13 @@ public class BoardDao {
 					Connection conn = getConnection();	
 					PreparedStatement pstmt = conn.prepareStatement(
 							" select a.no, a.title, a.hit, a.reg_date,a.user_no, a.g_no, a.o_no, a.depth, b.name from board a join user b"+
-								" where a.user_no = b.no and a.title like ? or b.name like ? order by  g_no desc, o_no asc");
+								" on a.user_no = b.no and a.title like ? or b.name like ? order by g_no desc, o_no asc limit ?, 5");
 					
 			){
 				pstmt.setString(1, "%" + kwd + "%");
 				pstmt.setString(2, "%" + kwd + "%");
+				pstmt.setInt(3, offset);
+//				pstmt.setInt(4, offset);
 				ResultSet rs = pstmt.executeQuery();
 	
 				//6. 결과 처리
@@ -114,12 +147,13 @@ public class BoardDao {
 					Connection conn = getConnection();	
 					PreparedStatement pstmt = conn.prepareStatement(
 							" select a.no, a.title, a.hit, a.reg_date,a.user_no, a.g_no, a.o_no, a.depth, b.name from board a join user b"+
-								" where a.user_no = b.no order by  g_no desc, o_no asc");
+								" on a.user_no = b.no order by g_no desc, o_no asc limit ?,5");
 					
 			){
-
+				pstmt.setInt(1, offset);
+//				pstmt.setInt(4, offset);
 				ResultSet rs = pstmt.executeQuery();
-	
+				
 				//6. 결과 처리
 				while(rs.next()) {
 					Long no = rs.getLong(1);

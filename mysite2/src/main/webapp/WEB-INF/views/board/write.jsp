@@ -16,7 +16,8 @@
 
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board?page_no=${page_no}">
+					<input type="hidden" name ="page_no" value="${current_page }">
 					<c:choose>
 						<c:when test='${param.g_no == null }'>
 							<input type="hidden" name="a" value="write">
@@ -48,8 +49,9 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="/board">취소</a>
+						<a href="${pageContext.request.contextPath}/board?page_no=${page_no }">취소</a>
 						<input type="submit" value="등록">
+						
 					</div>
 				</form>				
 			</div>

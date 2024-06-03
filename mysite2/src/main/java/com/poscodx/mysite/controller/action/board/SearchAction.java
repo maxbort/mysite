@@ -20,7 +20,8 @@ public class SearchAction implements Action {
 		if (keyword == null) {
 			keyword = "";
 		}
-		List<BoardVo> list = new BoardDao().findAll(keyword);
+		
+		List<BoardVo> list = new BoardDao().findAll(keyword,0);
 		System.out.println(list);
 		request.setAttribute("list", list);
 

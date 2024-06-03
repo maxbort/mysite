@@ -8,9 +8,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>mysite2</artifactId>
-	<packaging>war</packaging>
+	<packaging>${mysite2-packaging}</packaging>
 	
 	<properties>
+		<mysite2-packaging>war</mysite2-packaging>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -25,12 +26,13 @@
 		    <version>3.2.0</version>
 		</dependency>
 		
+		<!-- jstl -->
 		<dependency>
 		    <groupId>jstl</groupId>
 		    <artifactId>jstl</artifactId>
 		    <version>1.2</version>
 		</dependency>
-		
+				
 		<!-- servlet -->
 		<dependency>
 		    <groupId>javax.servlet</groupId>
@@ -48,16 +50,5 @@
 		
 	<build>
 		<finalName>mysite2</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-		    	<artifactId>tomcat7-maven-plugin</artifactId>
-		    	<version>2.2</version>
-		    	<configuration>
-					<url>${tomcat.deploy.url}</url>
-					<server>tomcat-poscodx</server>
-				</configuration>
-			</plugin>
-		</plugins>		
 	</build>	
 </project>
