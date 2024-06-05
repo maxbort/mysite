@@ -70,8 +70,6 @@ public class BoardDao {
 						" select * from board");
 				
 		){
-//			pstmt.setInt(3, offset+5);
-//			pstmt.setInt(4, offset);
 			ResultSet rs = pstmt.executeQuery();
 			
 			//6. 결과 처리
@@ -95,23 +93,31 @@ public class BoardDao {
 	
 	public List<BoardVo> findAll(String kwd, int offset) {
 		List<BoardVo> result = new ArrayList<>();
-		
-		if(kwd != "") {
-
 			try(
 					Connection conn = getConnection();	
-					PreparedStatement pstmt = conn.prepareStatement(
+				
+			){
+				PreparedStatement pstmt = null;
+				if (kwd != "") {
+					pstmt = conn.prepareStatement(
 							" select a.no, a.title, a.hit, a.reg_date,a.user_no, a.g_no, a.o_no, a.depth, b.name from board a join user b"+
 								" on a.user_no = b.no and a.title like ? or b.name like ? order by g_no desc, o_no asc limit ?, 5");
-					
-			){
-				pstmt.setString(1, "%" + kwd + "%");
-				pstmt.setString(2, "%" + kwd + "%");
-				pstmt.setInt(3, offset);
-//				pstmt.setInt(4, offset);
+					pstmt.setString(1, "%" + kwd + "%");
+					pstmt.setString(2, "%" + kwd + "%");
+					pstmt.setInt(3, offset);
+
+				} else {
+					pstmt = conn.prepareStatement(
+							" select a.no, a.title, a.hit, a.reg_date,a.user_no, a.g_no, a.o_no, a.depth, b.name from board a join user b"+
+							" on a.user_no = b.no order by g_no desc, o_no asc limit ?,5");
+					pstmt.setInt(1, offset);
+
+				}
+				
+		
+				
 				ResultSet rs = pstmt.executeQuery();
 	
-				//6. 결과 처리
 				while(rs.next()) {
 					Long no = rs.getLong(1);
 					String title = rs.getString(2);
@@ -141,50 +147,6 @@ public class BoardDao {
 			}
 			
 			return result;
-		}
-		else {
-			try(
-					Connection conn = getConnection();	
-					PreparedStatement pstmt = conn.prepareStatement(
-							" select a.no, a.title, a.hit, a.reg_date,a.user_no, a.g_no, a.o_no, a.depth, b.name from board a join user b"+
-								" on a.user_no = b.no order by g_no desc, o_no asc limit ?,5");
-					
-			){
-				pstmt.setInt(1, offset);
-//				pstmt.setInt(4, offset);
-				ResultSet rs = pstmt.executeQuery();
-				
-				//6. 결과 처리
-				while(rs.next()) {
-					Long no = rs.getLong(1);
-					String title = rs.getString(2);
-					Integer hit = rs.getInt(3);
-					String reg_date = rs.getString(4);
-					Long user_no = rs.getLong(5);
-					Integer g_no = rs.getInt(6);
-					Integer o_no = rs.getInt(7);
-					Integer depth = rs.getInt(8);
-					String user_name = rs.getString(9);
-					
-					BoardVo vo = new BoardVo();
-					vo.setNo(no);
-					vo.setTitle(title);
-					vo.setHit(hit);
-					vo.setReg_date(reg_date);
-					vo.setUser_no(user_no);
-					vo.setUser_name(user_name);
-					vo.setG_no(g_no);
-					vo.setO_no(o_no);
-					vo.setDepth(depth);
-					
-					result.add(vo);
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-			
-			return result;
-		}
 	}
 	
 	

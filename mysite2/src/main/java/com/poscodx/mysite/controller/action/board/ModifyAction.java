@@ -30,7 +30,6 @@ public class ModifyAction implements Action {
 			return;
 		}
 		String title = request.getParameter("title");
-		String contents = request.getParameter("content");
 		
 		if (title == null || "".equals(title)) {
 			response.sendRedirect(request.getContextPath());
@@ -46,8 +45,6 @@ public class ModifyAction implements Action {
 		new BoardDao().update(vo);
 		
 		int a = Integer.parseInt(request.getParameter("page_no"));
-		System.out.println(a);
-		System.out.println(request.getParameter("depth"));
 
 		response.sendRedirect(request.getContextPath() + "/board?a=view&no=" + no + "&page_no=" + a);
 	}

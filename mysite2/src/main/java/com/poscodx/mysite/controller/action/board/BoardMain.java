@@ -36,8 +36,7 @@ public class BoardMain implements Action {
 	
 		List<BoardVo> list = new BoardDao().findAll("",(current_page-1)*5);
 		
-		System.out.println(list);
-		System.out.println(current_page);
+
 		List<Integer> page_list = new ArrayList<>();
 	
 		int total_page = 0;
@@ -46,12 +45,7 @@ public class BoardMain implements Action {
 		} else {
 			total_page = new BoardDao().findTotal().size() / 5 + 1;
 		}
-		
-		List<BoardVo> list1 = new BoardDao().findAll("",0);
-		List<BoardVo> list2 = new BoardDao().findAll("",5);
-		System.out.println(list1);
-		System.out.println(list2);
-		
+
 		for(int i = 1; i <= total_page; i++) {
 			page_list.add(i);
 		}

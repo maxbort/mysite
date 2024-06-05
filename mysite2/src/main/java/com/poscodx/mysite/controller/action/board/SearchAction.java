@@ -22,7 +22,7 @@ public class SearchAction implements Action {
 		}
 		
 		List<BoardVo> list = new BoardDao().findAll(keyword,0);
-		System.out.println(list);
+
 		request.setAttribute("list", list);
 
 
