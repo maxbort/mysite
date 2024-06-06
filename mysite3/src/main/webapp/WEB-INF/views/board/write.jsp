@@ -16,22 +16,15 @@
 
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<c:choose>
-						<c:when test='${param.g_no == null }'>
-							<input type="hidden" name="a" value="write">
-						</c:when>
-						<c:otherwise>
-							<input type="hidden" name="a" value="reply">
-						</c:otherwise>
-					</c:choose>
-					<input type="hidden" name="no" value="${param.no }" />
-					<input type="hidden" name="kwd" value="${param.no }"/>
-					<input type="hidden" name="g_no" value="${param.g_no }" />
-					<input type="hidden" name="o_no" value="${param.o_no }"/>
-					<input type="hidden" name="depth" value="${param.depth }"/>
-					
-					
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/${param.gNo == null ? 'write' : 'reply'}">
+                    <c:if test="${param.g_no != null}">
+                        <input type="hidden" name="gNo" value="${boardVo.gNo}">
+                        <input type="hidden" name="oNo" value="${boardVo.oNo}">
+                        <input type="hidden" name="depth" value="${boardVo.depth}">
+                    </c:if>
+                    <input type="hidden" name="page" value="${param.page}">
+                    <input type="hidden" name="kwd" value="${param.kwd}">
+                    
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -48,7 +41,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="/board">취소</a>
+						<a href="${pageContext.request.contextPath }/board?p=${param.page }&kwd=${param.kwd }">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				

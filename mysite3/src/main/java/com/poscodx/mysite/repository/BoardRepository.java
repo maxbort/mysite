@@ -5,16 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.poscodx.mysite.vo.BoardVo;
 
+@Repository
 public class BoardRepository {
 	
+	@Autowired
 	private SqlSession sqlSession;
 	
-	public BoardRepository(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
+//	public BoardRepository(SqlSession sqlSession) {
+//		this.sqlSession = sqlSession;
+//	}
 	
 	public int insert(BoardVo vo) {
 		return sqlSession.insert("board.insert", vo);
@@ -75,6 +79,6 @@ public class BoardRepository {
 	}
 	
 	public int getTotalArticle(String keyword) {	
-		return sqlSession.selectOne("board.totalArticle", keyword);
+		return sqlSession.selectOne("board.GetTotalArticle", keyword);
 	}
 }
