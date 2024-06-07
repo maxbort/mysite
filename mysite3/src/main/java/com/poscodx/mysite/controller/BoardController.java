@@ -47,33 +47,35 @@ public class BoardController {
 		return "board/view";
 	}
 	
-	@RequestMapping("/write/{no}")
-	public String add(HttpSession session, @PathVariable("no") Long no) {
+	@RequestMapping(value="/write", method=RequestMethod.GET)	
+	public String write(HttpSession session) {
+		// access control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			return "redirect:/";
 		}
-
+		////////////////////////
 		return "board/write";
 	}
-	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String add(
-			HttpSession session,
-			@ModelAttribute BoardVo vo,
-			@RequestParam(value="page", required=true, defaultValue="1") Integer page,
-			@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
-		
+
+	@RequestMapping(value="/write", method=RequestMethod.POST)	
+	public String write(
+		HttpSession session,
+		@ModelAttribute BoardVo vo,
+		@RequestParam(value="page", required=true, defaultValue="1") Integer page,
+		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
+		// access control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			return "redirect:/";
 		}
+		////////////////////////		
 		
 		vo.setuserNo(authUser.getNo());
 		boardService.addContents(vo);
 		
-		return "redirect:/board?page=" + page + "&kwd=" + keyword;
+		return	"redirect:/board?page=" + page + "&kwd=" + keyword;
 	}
-
 	
 	
 	
@@ -91,6 +93,7 @@ public class BoardController {
 		return "board/update";
 	}
 	
+	
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
 	public String modify(
 			HttpSession session, 
@@ -107,7 +110,7 @@ public class BoardController {
 			vo.setuserNo(authUser.getNo());
 			boardService.updateContents(vo);
 			return "redirect:/board/view/" + vo.getNo() + 
-					"?p=" + page + 
+					"?page=" + page + 
 					"&kwd=" + keyword;
 		}
 	
@@ -140,6 +143,8 @@ public class BoardController {
 		BoardVo vo = boardService.getContents(no);
 		vo.setOno(vo.getOno() + 1);
 		vo.setDepth(vo.getDepth() + 1);
+		
+		boardService.addContents(vo);
 		
 		return "board/write";
 	}

@@ -45,14 +45,19 @@
 								</c:otherwise>
 							</c:choose>
 							
-							
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
-							
-								<c:if test='${not empty authUser && vo.user_no == authUser.no }'>
-									<a href="${pageContext.request.contextPath }/board/delete/${vo.no }?page=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
-								</c:if>						
+							<td>
+							<c:choose>
+									<c:when test="${not empty authUser && authUser.no == vo.userNo }">
+										<a href="${pageContext.request.contextPath }/board/delete/${vo.no }?p=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
+									</c:when>
+									<c:otherwise>
+										&nbsp;
+									</c:otherwise>
+								</c:choose>
+							</td>
 							</tr>
 					</c:forEach>
 									

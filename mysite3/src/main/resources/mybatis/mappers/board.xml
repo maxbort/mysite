@@ -4,7 +4,7 @@
 <mapper namespace="board">
 	<insert id="insert" parameterType="vo">
 		<choose>
-			<when test="groupNo == null">
+			<when test="gNo == null">
 				<![CDATA[
 				insert
 				  into board
@@ -13,7 +13,7 @@
 						#{contents },
 						0,
 						now(),
-						(select ifnull(max(g_no), 0) + 1 from board a ),
+						(select ifnull(max(g_no), 0) + 1 from board a),
 						1, 
 						0, 
 						#{userNo })
@@ -28,8 +28,8 @@
 						#{contents },
 						0,
 						now(),
-						#{groupNo },
-						#{orderNo }, 
+						#{gNo },
+						#{oNo }, 
 						#{depth }, 
 						#{userNo })				
 				]]>
@@ -61,8 +61,8 @@
 		select	no,
 				title,
 				contents,
-				g_no as groupNo,
-				o_no as orderNo,
+				g_no as gNo,
+				o_no as oNo,
 				depth,
 				user_no as userNo
 		   from board
@@ -88,13 +88,13 @@
 				  select a.no,
 				  		 a.title,
 				  		 a.hit,
-				  		 a.reg_date,
-				  		 a.user_no,
-				  		 a.g_no,
-				  		 a.o_no,
+				  		 a.reg_date as regDate,
+				  		 a.user_no as userNo,
+				  		 a.g_no as gNo,
+				  		 a.o_no as oNo,
 				  		 a.depth,
-				  		 b.name,
-				  		 a.user_no
+				  		 b.name as userName,
+				  		 b.no
 					from board a join user b
 					on a.user_no = b.no
 					order by g_no desc, o_no asc
@@ -107,12 +107,12 @@
 				 select a.no,
 				  		 a.title,
 				  		 a.hit,
-				  		 a.reg_date,
-				  		 a.user_no,
-				  		 a.g_no,
-				  		 a.o_no,
+				  		 a.reg_date as regDate,
+				  		 a.user_no as userNo,
+				  		 a.g_no as gNo,
+				  		 a.o_no as oNo,
 				  		 a.depth,
-				  		 b.name,
+				  		 b.name as userName,
 				  		 a.user_no
 					from board a join user b
 					on a.user_no = b.no and (title like '%${keyword }%' or contents like '%${keyword }%')
@@ -132,12 +132,12 @@
 		]]>	
 	</update>
 	
-	<update id="updateOrederNo" parameterType="map">
+	<update id="updateOrderNo" parameterType="map">
 		<![CDATA[
 		update board
 		   set o_no = o_no + 1
-		 where g_no = #{groupNo }
-		   and o_no >= #{orderNo }
+		 where g_no = #{gNo }
+		   and o_no >= #{oNo }
 		]]>	
 	</update>	
 	

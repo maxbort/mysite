@@ -21,9 +21,11 @@ public class BoardService {
 	public void addContents(BoardVo vo) {
 //		boardRepository.updateOrderNo(vo.getNo());
 //		boardRepository.insert(vo);
-		if((Integer)(vo.getGno()) != null) {
+		if(vo.getGno() != null) {
 			boardRepository.updateOrderNo(vo.getGno(), vo.getOno());
 		}
+		
+		System.out.println(vo);
 		boardRepository.insert(vo);
 		
 	}
@@ -40,7 +42,7 @@ public class BoardService {
 	
 	public BoardVo getContents(Long no, Long userNo) {
 		BoardVo vo = boardRepository.findByNoandUserNo(no, userNo);
-		
+
 		return vo;
 	}
 	
@@ -59,7 +61,6 @@ public class BoardService {
 		
 		int totalArticle = boardRepository.getTotalArticle(keyword);
 		
-		System.out.println(totalArticle);
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		map.put("startIndex", (currentPage-1)*5);
 		map.put("size", SIZE);
