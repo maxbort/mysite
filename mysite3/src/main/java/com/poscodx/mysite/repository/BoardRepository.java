@@ -23,16 +23,8 @@ public class BoardRepository {
 	
 	public int insert(BoardVo vo) {
 		
-		StopWatch sw = new StopWatch();
-		sw.start();
-		
-		int count =sqlSession.insert("board.insert", vo);
-		
-		sw.stop();
-		long totalTime = sw.getTotalTimeMillis();
-		System.out.println(totalTime);
-		
-		return count;
+        return sqlSession.insert("board.insert", vo);
+
 		
 	}
 	
