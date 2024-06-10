@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StopWatch;
 
 import com.poscodx.mysite.vo.GuestbookVo;
 
@@ -25,6 +26,14 @@ public class GuestbookRepository {
 	}
 	
 	public List<GuestbookVo> findAll() {
-		return sqlSession.selectList("guestbook.findAll");
+		StopWatch sw = new StopWatch();
+		sw.start();
+		List<GuestbookVo> result = sqlSession.selectList("guestbook.findAll");
+		
+		sw.stop();
+		long totalTime = sw.getTotalTimeMillis();
+		
+		return result;
+		
 	}	
 }

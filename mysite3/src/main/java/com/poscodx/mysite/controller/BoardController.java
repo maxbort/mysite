@@ -54,7 +54,7 @@ public class BoardController {
 		if(authUser == null) {
 			return "redirect:/";
 		}
-		////////////////////////
+		///////////////////////
 		return "board/write";
 	}
 
@@ -78,7 +78,6 @@ public class BoardController {
 	}
 	
 	
-	
 	@RequestMapping("/modify/{no}")
 	public String modify(HttpSession session, @PathVariable("no") Long no, Model model) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -93,19 +92,19 @@ public class BoardController {
 		return "board/update";
 	}
 	
-	
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
 	public String modify(
-			HttpSession session, 
+//			HttpSession session, 
+			UserVo authUser,
 			BoardVo vo,
 			@RequestParam(value="page", required=true, defaultValue="1") Integer page,
 			@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {		
 			// access control
-			UserVo authUser = (UserVo)session.getAttribute("authUser");
-			if(authUser == null) {
-				return "redirect:/";
-			}
-			////////////////////////
+//			UserVo authUser = (UserVo)session.getAttribute("authUser");
+//			if(authUser == null) {
+//				return "redirect:/";
+//			}
+//			////////////////////////
 			
 			vo.setuserNo(authUser.getNo());
 			boardService.updateContents(vo);
