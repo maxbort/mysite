@@ -34,7 +34,7 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?p=${param.page }&kwd=${param.kwd }">글목록</a>
+					<a href="${pageContext.request.contextPath }/board?page=${param.page }&kwd=${param.kwd }">글목록</a>
 					<c:if test="${ not empty authUser }">
 						<a href="${pageContext.request.contextPath }/board/reply/${vo.no }?page=${param.page }&kwd=${param.kwd }">답글 달기</a>
 						<c:if test="${authUser.no == vo.userNo }">

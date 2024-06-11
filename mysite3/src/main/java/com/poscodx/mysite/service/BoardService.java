@@ -21,12 +21,11 @@ public class BoardService {
 	public void addContents(BoardVo vo) {
 //		boardRepository.updateOrderNo(vo.getNo());
 //		boardRepository.insert(vo);
-		if(vo.getGno() != null) {
-			boardRepository.updateOrderNo(vo.getGno(), vo.getOno());
+		if(vo.getgNo() != null) {
+			boardRepository.updateOrderNo(vo.getgNo(), vo.getoNo());
 		}
-		
-		System.out.println(vo);
 		boardRepository.insert(vo);
+
 		
 	}
 	

@@ -16,7 +16,7 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/modify">
-					<input type="hidden" name="no" value="${boardVo.no }" />
+					<input type="hidden" name="no" value="${vo.no }" />
 					<input type="hidden" name="page" value="${param.page }" />
 					<input type="hidden" name="kwd" value="${param.kwd }" />
 					<table class="tbl-ex">
@@ -30,7 +30,7 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content">${vo.contents }</textarea>
+								<textarea id="content" name="contents">${vo.contents }</textarea>
 							</td>
 						</tr>
 					</table>

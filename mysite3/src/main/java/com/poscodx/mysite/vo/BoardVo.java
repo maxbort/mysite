@@ -11,14 +11,6 @@ public class BoardVo {
 	private Integer depth;
 	private Long userNo;
 	private String userName;
-	
-
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String user_name) {
-		this.userName = user_name;
-	}
 	public Long getNo() {
 		return no;
 	}
@@ -49,16 +41,16 @@ public class BoardVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public Integer getGno() {
+	public Integer getgNo() {
 		return gNo;
 	}
-	public void setGno(Integer gNo) {
+	public void setgNo(Integer gNo) {
 		this.gNo = gNo;
 	}
-	public Integer getOno() {
+	public Integer getoNo() {
 		return oNo;
 	}
-	public void setOno(Integer oNo) {
+	public void setoNo(Integer oNo) {
 		this.oNo = oNo;
 	}
 	public Integer getDepth() {
@@ -67,16 +59,21 @@ public class BoardVo {
 	public void setDepth(Integer depth) {
 		this.depth = depth;
 	}
-	public Long getuserNo() {
+	public Long getUserNo() {
 		return userNo;
 	}
-	public void setuserNo(Long userNo) {
+	public void setUserNo(Long userNo) {
 		this.userNo = userNo;
 	}
-	@Override
-	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
-				+ regDate + ", gNo=" + gNo + ", oNo=" + oNo + ", depth=" + depth + ", userNo=" + userNo + "]";
+	public String getUserName() {
+		return userName;
 	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	
+
+	
 	
 }

@@ -13,7 +13,7 @@
 						#{contents },
 						0,
 						now(),
-						(select ifnull(max(g_no), 0) + 1 from board a),
+						(select ifnull(max(a.g_no), 0) + 1 from board a),
 						1, 
 						0, 
 						#{userNo })
@@ -70,7 +70,7 @@
 		]]>		
 	</select>
 	
-	<select id="findByNoAndUserNo" parameterType="map" resultType="vo">
+	<select id="findByNoandUserNo" parameterType="map" resultType="vo">
 		<![CDATA[
 		select	no,
 				title,

@@ -46,7 +46,7 @@ public class BoardRepository {
 		map.put("size", size);
 		
 		
-		return sqlSession.selectList("board.findAll",map);
+		return sqlSession.selectList("board.findAll",map); 
 	}
 	
 	

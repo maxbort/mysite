@@ -16,11 +16,12 @@
 
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/${vo.gNo == null ? 'write' : 'reply'}">
-                    <c:if test="${vo.gNo != null}">
-                        <input type="hidden" name="gNo" value="${vo.gNo}">
-                        <input type="hidden" name="oNo" value="${vo.oNo}">
-                        <input type="hidden" name="depth" value="${vo.depth}">
+			<!-- <script>alert(${vo.gNo})</script> -->
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/${r_vo.gNo == null ? 'write' : 'reply'}">
+                    <c:if test="${r_vo.gNo != null}">
+                        <input type="hidden" name="gNo" value="${r_vo.gNo}">
+                        <input type="hidden" name="oNo" value="${r_vo.oNo}">
+                        <input type="hidden" name="depth" value="${r_vo.depth}">
                     </c:if>
                     <input type="hidden" name="page" value="${param.page}">
                     <input type="hidden" name="kwd" value="${param.kwd}">

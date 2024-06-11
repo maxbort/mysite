@@ -51,7 +51,7 @@
 							<td>
 							<c:choose>
 									<c:when test="${not empty authUser && authUser.no == vo.userNo }">
-										<a href="${pageContext.request.contextPath }/board/delete/${vo.no }?p=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
+										<a href="${pageContext.request.contextPath }/board/delete/${vo.no }?page=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
 									</c:when>
 									<c:otherwise>
 										&nbsp;

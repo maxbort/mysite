@@ -8,6 +8,7 @@ public class MainController {
 	
 	@RequestMapping({"/", "/main"})
 	public String index() {
+		System.out.println("aaa");
 		
 //		ServletContext sc = request.getServletContext();
 		
