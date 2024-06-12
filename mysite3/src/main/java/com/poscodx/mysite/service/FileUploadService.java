@@ -24,6 +24,7 @@ public class FileUploadService {
 			}
 			
 			if(file.isEmpty()) {
+				System.out.println("file is empty!!!!");
 				return url;
 			}
 			

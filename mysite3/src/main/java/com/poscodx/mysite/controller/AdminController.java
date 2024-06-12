@@ -36,17 +36,17 @@ public class AdminController {
 	}
 
 	@RequestMapping("/main/update")
-	public String update(SiteVo vo) {
-//		String profile = fileUploadService.restore(file);
-//		
-//		if(profile != null) {
-//			vo.setProfile(profile);
-//		}
+	public String update(SiteVo vo, MultipartFile file) {
+		System.out.println(file);
+		String profile = fileUploadService.restore(file);
 		
+		if(profile != null) {
+			vo.setProfile(profile);
+		}
 		
-		siteService.updateSite(vo);
-		System.out.println("###########################here is update vo");
+		System.out.println("########################### here is update vo");
 		System.out.println(vo);
+		siteService.updateSite(vo);
 		servletContext.setAttribute("sitevo", vo);
 		return "redirect:/admin";
 	}
