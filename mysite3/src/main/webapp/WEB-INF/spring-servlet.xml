@@ -58,6 +58,10 @@
 			<mvc:exclude-mapping path="/assets/**"/>
 			<bean class="com.poscodx.mysite.security.AuthInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.poscodx.mysite.interceptor.SiteInterceptor" />
+		</mvc:interceptor>	
 	</mvc:interceptors>
 	
 	<!-- View Resolver -->
@@ -71,6 +75,17 @@
 	   			<value>site</value>
 	   		</list>
 	   	</property>
+	</bean>
+	
+	
+	<!-- MessageSource -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+	   		<list>
+				<value>messages/messages_ko</value>
+				<value>messages/messages_en</value>
+			</list>
+		</property>
 	</bean>
 		<!-- Multipart Resolver -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
