@@ -32,7 +32,7 @@
 			   </property>
 			</bean>
 		</mvc:message-converters>
-		
+
 		<!-- Argument Resolver 등록 -->
 		<mvc:argument-resolvers>
 			<bean class="com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver"/>
