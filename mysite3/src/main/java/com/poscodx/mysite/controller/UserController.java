@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poscodx.mysite.dto.JsonResult;
 import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.UserService;
@@ -25,8 +28,22 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo vo) {
 		return "user/join";
+	}
+	
+	@GetMapping("/checkemail")
+	public JsonResult checkEmail(@RequestParam(value="email", required=true, defaultValue = "") String email) {
+		UserVo vo = userService.getUser(email);
+	
+		return JsonResult.success(vo != null);
+		
+//		JsonResult jsonResult = new JsonResult();
+//		
+//		jsonResult.setResult("ok");
+//		
+//		return jsonResult;
+//				
 	}
 //	
 //	@RequestMapping(value="/join", method=RequestMethod.POST)
@@ -44,7 +61,7 @@ public class UserController {
 //			for(ObjectError error:list) {
 //				System.out.println(error);
 //			}
-			Map<String, Object> map = result.getModel();			
+			Map<String, Object> map = result.getModel();
 //			Set<String> s = map.keySet();
 //			for(String key : s) {
 //				model.addAttribute(key, map.get(key));

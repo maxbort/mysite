@@ -17,7 +17,7 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<org.springframework-version>5.3.36</org.springframework-version>
 	    <jcloverslf4j.version>1.7.36</jcloverslf4j.version>		
-	    <logback.version>1.2.11</logback.version>
+    	<logback.version>1.2.11</logback.version>	
 	</properties>
 	
 	<dependencies>
@@ -26,25 +26,15 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
-			<!-- jcl 제외-->
+			<!-- jcl 제외 -->
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-jcl</artifactId>
 				</exclusion>
-			</exclusions>
+			</exclusions>		
 		</dependency>
-		<!-- common fileupload -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
-		</dependency>
+		
 		<!-- spring jdbc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -91,7 +81,20 @@
 		   <artifactId>hibernate-validator</artifactId>
 		   <version>6.2.3.Final</version>
 		</dependency>
+
 		
+		<!-- common fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+				
 		<!-- jstl -->
 		<dependency>
 		    <groupId>jstl</groupId>
@@ -105,18 +108,19 @@
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.13.4.1</version>
 		</dependency>
-
-		<!-- logback(slf4j)-->
+		
+		<!-- logback(slf4j) -->
 		<dependency>                                    
-		   <groupId>org.slf4j</groupId>                
-		   <artifactId>jcl-over-slf4j</artifactId>     
-		   <version>${jcloverslf4j.version}</version>  
+   			<groupId>org.slf4j</groupId>                
+   			<artifactId>jcl-over-slf4j</artifactId>     
+   			<version>${jcloverslf4j.version}</version>  
 		</dependency>
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-classic</artifactId>
 		    <version>${logback.version}</version>
 		</dependency>
+						
 		<!-- servlet -->
 		<dependency>
 		    <groupId>javax.servlet</groupId>
@@ -129,9 +133,13 @@
 		    <artifactId>jsp-api</artifactId>
 		    <version>2.2</version>
 		    <scope>provided</scope>
-		</dependency>		
+		</dependency>
+		<dependency>
+			<groupId>com.poscodx</groupId>
+			<artifactId>emaillist1</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
-	
 	
 	<build>
 		<finalName>mysite3</finalName>

@@ -12,7 +12,6 @@
 <link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
-
 $(function() {
 	$("#btn-check").click(function() {
 		var email = $("#email").val();
@@ -27,8 +26,13 @@ $(function() {
 			error: function(xhr, status, err){
 				console.error(err);			
 			},
-			success: function(response){
-				if(response.exist) {
+			success: function(response) {
+				if(response.result == "fail") {
+					console.error(response.message);
+					return;
+				}
+				
+				if(response.data) {
 					alert("존재하는 이메일입니다. 다른 이메일을 사용해 주세요.");
 					$("#email").val("");
 					$("#email").focus();
@@ -42,6 +46,7 @@ $(function() {
 		});
 	})
 });
+
 
 </script>
 </head>

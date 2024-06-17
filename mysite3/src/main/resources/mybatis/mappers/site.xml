@@ -4,7 +4,7 @@
 <mapper namespace="site">
 	<select id="find" resultType="sitevo">
 		<![CDATA[
-		  select no, title, welcome, profile, description
+		  select title, welcome, profile, description
 			from site
 		order by no asc
 		   limit 0, 1
