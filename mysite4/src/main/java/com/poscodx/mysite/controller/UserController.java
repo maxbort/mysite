@@ -141,4 +141,12 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/auth")
+	public void auth() {
+	}
+
+	@RequestMapping("/logout")
+	public void logout() {
+	}
+	
 }
