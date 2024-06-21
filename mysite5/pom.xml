@@ -15,6 +15,7 @@
 		<org.springframework-version>5.3.36</org.springframework-version>
 	    <jcloverslf4j.version>1.7.36</jcloverslf4j.version>		
     	<logback.version>1.2.11</logback.version>	
+		<org.springframework.security-version>5.8.8</org.springframework.security-version>
 	</properties>
 	
 	<dependencies>
@@ -131,9 +132,31 @@
 		    <version>2.2</version>
 		    <scope>provided</scope>
 		</dependency>		
+		
+		<!-- spring security config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springframework.security-version}</version>
+		</dependency>
+		
+		
+		<!-- spring security web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springframework.security-version}</version>
+		</dependency>
+		
+		<!-- spring security taglib -->
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-taglibs</artifactId>
+	    <version>5.4.1</version>
+	</dependency>
 	</dependencies>
 	
 	<build>
-		<finalName>mysite4</finalName>
+		<finalName>mysite5</finalName>
 	</build>		
 </project>

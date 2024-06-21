@@ -6,16 +6,17 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.poscodx.mysite.dto.JsonResult;
 import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.UserService;
@@ -32,28 +33,8 @@ public class UserController {
 		return "user/join";
 	}
 	
-	@GetMapping("/checkemail")
-	public JsonResult checkEmail(@RequestParam(value="email", required=true, defaultValue = "") String email) {
-		UserVo vo = userService.getUser(email);
-	
-		return JsonResult.success(vo != null);
-		
-//		JsonResult jsonResult = new JsonResult();
-//		
-//		jsonResult.setResult("ok");
-//		
-//		return jsonResult;
-//				
-	}
-//	
-//	@RequestMapping(value="/join", method=RequestMethod.POST)
-//	public String join(UserVo vo) {
-//		userService.join(vo);
-//		return "redirect:/user/joinsuccess";
-//	}
-	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model){
+	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 //			model.addAttribute("userVo", vo);
 
@@ -61,7 +42,7 @@ public class UserController {
 //			for(ObjectError error:list) {
 //				System.out.println(error);
 //			}
-			Map<String, Object> map = result.getModel();
+			Map<String, Object> map = result.getModel();			
 //			Set<String> s = map.keySet();
 //			for(String key : s) {
 //				model.addAttribute(key, map.get(key));
@@ -70,7 +51,7 @@ public class UserController {
 			
 			return "user/join";
 		}
-		
+
 		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
@@ -85,39 +66,17 @@ public class UserController {
 		return "user/login";
 	}
 	
-//	@RequestMapping(value="/login", method=RequestMethod.POST)
-//	public String login(HttpSession session, UserVo vo, Model model) {
-//		UserVo authUser = userService.getUser(vo.getEmail(), vo.getPassword());
-//		if(authUser == null) {
-//			model.addAttribute("email", vo.getEmail());
-//			model.addAttribute("result", "fail");
-//			
-//			return "user/login";
-//		}
-//		
-//		// login 처리
-//		session.setAttribute("authUser", authUser);
-//		
-//		return "redirect:/";
-//	}
-	
-//	@RequestMapping("/logout")
-//	public String logout(HttpSession session) {
-//		session.removeAttribute("authUser");
-//		session.invalidate();
-//		return "redirect:/";
-//	}
-	
-	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(@AuthUser UserVo authUser, Model model) {
-		// access control
-//		UserVo authUser = (UserVo)session.getAttribute("authUser");
-//		if(authUser == null) {
-//			return "redirect:/";
-//		}
-//		////////////////////////
-		
+	public String update(Authentication authentication, Model model) {
+//      1. SecurityContextHolder(Spring Security ThreadLocal Helper Class) 기반		
+//		SecurityContext sc = SecurityContextHolder.getContext();
+//		Authentication authentication = sc.getAuthentication();
+
+//      2. HttpSession 기반		
+//		SecurityContext sc = (SecurityContext)session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY)
+//		Authentication authentication = sc.getAuthentication();
+
+		UserVo authUser = (UserVo)authentication.getPrincipal();
 		UserVo vo = userService.getUser(authUser.getNo());
 		model.addAttribute("userVo", vo);
 		
@@ -126,27 +85,20 @@ public class UserController {
 	
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo vo) {
-		// access control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-//		if(authUser == null) {
-//			return "redirect:/";
-//		}
-//		////////////////////////
-
+	public String update(@AuthUser UserVo authUser, UserVo vo) {
 		vo.setNo(authUser.getNo());
 		userService.update(vo);
 		
 		authUser.setName(vo.getName());
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/auth")
-	public void auth() {
+		return "redirect:/user/update";
 	}
 
-	@RequestMapping("/logout")
-	public void logout() {
-	}
+//	@RequestMapping("/auth")
+//	public void auth() {
+//	}
+//
+//	@RequestMapping("/logout")
+//	public void logout() {
+//	}
 	
 }
