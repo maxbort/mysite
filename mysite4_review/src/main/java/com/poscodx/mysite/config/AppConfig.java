@@ -15,5 +15,4 @@ import com.poscodx.mysite.config.app.MyBatisConfig;
 @ComponentScan({"com.poscodx.mysite.service", "com.poscodx.mysite.repository", "com.poscodx.mysite.aspect"})
 @Import({DBConfig.class, MyBatisConfig.class})
 public class AppConfig {
-
 }

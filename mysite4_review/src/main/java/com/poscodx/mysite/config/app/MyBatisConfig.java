@@ -23,7 +23,7 @@ public class MyBatisConfig {
 		
 		sqlSessionFactory.setConfigLocation(
 				applicationContext.getResource(
-						"classpath:com/poscodx/mysite/app/mybatis/configuration.xml"
+						"classpath:com/poscodx/mysite/config/app/mybatis/configuration.xml"
 						));
 		
 		return sqlSessionFactory.getObject();

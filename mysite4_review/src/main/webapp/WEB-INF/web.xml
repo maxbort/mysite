@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	<display-name>mysite3</display-name>
+	<display-name>mysite4</display-name>
 	
 	<!-- Context Parameters -->
 	<context-param>
@@ -35,15 +35,14 @@
 		<servlet-name>dispatcher-servlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring-servlet.xml</param-value>
+			<param-value>com.poscodx.mysite.config.WebConfig</param-value>
 		</init-param>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>dispatcher-servlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
 	<!-- Common Error Pages -->
 	<error-page>
 		<error-code>400</error-code>
