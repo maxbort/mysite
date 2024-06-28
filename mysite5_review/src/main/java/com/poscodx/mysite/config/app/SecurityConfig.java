@@ -37,6 +37,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http
+    	.logout()
+    	.logoutUrl("/user/logout")
+    	.and()
    		.formLogin()
    		.loginPage("/user/login")
    		.loginProcessingUrl("/user/auth")
@@ -52,8 +55,11 @@ public class SecurityConfig {
    			registry
    				/* ACL */
    				.requestMatchers(new RegexRequestMatcher("^/user/update$", null))
-   				.hasAnyRole("ADMIN", "USER")
-
+   				.hasRole("ADMIN")
+   				.requestMatchers(new RegexRequestMatcher("^/board/?(write|reply|delete|modify)?/.*$",null))
+   				.hasAnyRole("ADMIN","USER")
+   				.requestMatchers(new RegexRequestMatcher("^/user/update$",null))
+   				.hasAnyRole("ADMIN","USER")
    				.anyRequest()
    	       		.permitAll();
 		});

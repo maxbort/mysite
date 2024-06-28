@@ -35,16 +35,15 @@ $(function(){
 				</c:choose>
 			</div>			
 			<ul>
-				<c:choose>
-					<c:when test='${empty authUser }'>
-						<li><a href="${pageContext.request.contextPath}/user/login">로그인</a><li>
-						<li><a href="${pageContext.request.contextPath}/user/join">회원가입</a><li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="${pageContext.request.contextPath}/user/update">회원정보수정</a><li>
-						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a><li>
-						<li>${authUser.name }님 안녕하세요 ^^;</li>
-					</c:otherwise>
-				</c:choose>
+				<sec:authorize access="!isAuthenticated()">
+					<li><a href="${pageContext.request.contextPath}/user/login">로그인</a><li>
+					<li><a href="${pageContext.request.contextPath}/user/join">회원가입</a><li>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<sec:authentication property="principal" var="user"/>
+					<li><a href="${pageContext.request.contextPath}/user/update">회원정보수정</a><li>
+					<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a><li>
+					<li>${user.name }님 안녕하세요 ^^;</li>
+				</sec:authorize>
 			</ul>
 		</div>

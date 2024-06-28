@@ -2,10 +2,10 @@ package com.poscodx.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -118,27 +118,42 @@ public class UserController {
 //		}
 //		////////////////////////
 		
-		UserVo vo = userService.getUser(authUser.getNo());
-		model.addAttribute("userVo", vo);
+//		UserVo vo = userService.getUser(authUser.getNo());
+//		model.addAttribute("userVo", vo);
+//		
+//		return "user/update";
 		
-		return "user/update";
+		
+		
 	}
 	
-	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo vo) {
+	public String update(Authentication authentication, Model model) {
 		// access control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 //		if(authUser == null) {
 //			return "redirect:/";
 //		}
 //		////////////////////////
 
-		vo.setNo(authUser.getNo());
-		userService.update(vo);
+//		vo.setNo(authUser.getNo());
+//		userService.update(vo);
+//		
+//		authUser.setName(vo.getName());
+//		return "redirect:/";
 		
-		authUser.setName(vo.getName());
-		return "redirect:/";
+//      1. SecurityContextHolder(Spring Security ThreadLocal Helper Class) 기반		
+//		SecurityContext sc = SecurityContextHolder.getContext();
+//		Authentication authentication = sc.getAuthentication();
+
+//      2. HttpSession 기반		
+//		SecurityContext sc = (SecurityContext)session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY)
+//		Authentication authentication = sc.getAuthentication();
+		UserVo authUser = (UserVo)authentication.getPrincipal();
+		UserVo vo = userService.getUser(authUser.getNo());
+		model.addAttribute("userVo", vo);
+		
+		return "user/update";
 	}
 	
 
