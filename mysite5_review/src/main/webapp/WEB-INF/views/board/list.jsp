@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <!doctype html>
 <html>
@@ -49,14 +50,12 @@
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
 							<td>
-							<c:choose>
-									<c:when test="${not empty authUser && authUser.no == vo.userNo }">
+							<sec:authorize access="isAuthenticated()">
+									<sec:authentication property="principal" var="authUser"/>
+									<c:if test="${authUser.no == vo.userNo }">
 										<a href="${pageContext.request.contextPath }/board/delete/${vo.no }?page=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
-									</c:when>
-									<c:otherwise>
-										&nbsp;
-									</c:otherwise>
-								</c:choose>
+								</c:if>
+								</sec:authorize>
 							</td>
 							</tr>
 					</c:forEach>
@@ -89,9 +88,9 @@
 					</ul>
 				</div>				
 				<div class="bottom">
-					<c:if test="${not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board/write?page=${map.currentPage }&kwd=${map.keyword }" id="new-book">글쓰기</a>
-					</c:if>
+				<sec:authorize access="isAuthenticated()">
+						<a href="${pageContext.request.contextPath }/board/write?p=${map.currentPage }&kwd=${map.keyword }" id="new-book">글쓰기</a>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

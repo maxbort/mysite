@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poscodx.mysite.dto.JsonResult;
-import com.poscodx.mysite.security.Auth;
-import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.UserVo;
 
@@ -37,35 +35,15 @@ public class UserController {
 		UserVo vo = userService.getUser(email);
 	
 		return JsonResult.success(vo != null);
-		
-//		JsonResult jsonResult = new JsonResult();
-//		
-//		jsonResult.setResult("ok");
-//		
-//		return jsonResult;
-//				
 	}
-//	
-//	@RequestMapping(value="/join", method=RequestMethod.POST)
-//	public String join(UserVo vo) {
-//		userService.join(vo);
-//		return "redirect:/user/joinsuccess";
-//	}
+
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model){
 		if(result.hasErrors()) {
-//			model.addAttribute("userVo", vo);
 
-//			List<ObjectError> list = result.getAllErrors();
-//			for(ObjectError error:list) {
-//				System.out.println(error);
-//			}
 			Map<String, Object> map = result.getModel();
-//			Set<String> s = map.keySet();
-//			for(String key : s) {
-//				model.addAttribute(key, map.get(key));
-//			}
+
 			model.addAllAttributes(map);
 			
 			return "user/join";
@@ -85,67 +63,11 @@ public class UserController {
 		return "user/login";
 	}
 	
-//	@RequestMapping(value="/login", method=RequestMethod.POST)
-//	public String login(HttpSession session, UserVo vo, Model model) {
-//		UserVo authUser = userService.getUser(vo.getEmail(), vo.getPassword());
-//		if(authUser == null) {
-//			model.addAttribute("email", vo.getEmail());
-//			model.addAttribute("result", "fail");
-//			
-//			return "user/login";
-//		}
-//		
-//		// login 처리
-//		session.setAttribute("authUser", authUser);
-//		
-//		return "redirect:/";
-//	}
-	
-//	@RequestMapping("/logout")
-//	public String logout(HttpSession session) {
-//		session.removeAttribute("authUser");
-//		session.invalidate();
-//		return "redirect:/";
-//	}
-	
-	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(@AuthUser UserVo authUser, Model model) {
-		// access control
-//		UserVo authUser = (UserVo)session.getAttribute("authUser");
-//		if(authUser == null) {
-//			return "redirect:/";
-//		}
-//		////////////////////////
-		
-//		UserVo vo = userService.getUser(authUser.getNo());
-//		model.addAttribute("userVo", vo);
-//		
-//		return "user/update";
-		
-		
-		
-	}
-	
-	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(Authentication authentication, Model model) {
-		// access control
-		//UserVo authUser = (UserVo)session.getAttribute("authUser");
-//		if(authUser == null) {
-//			return "redirect:/";
-//		}
-//		////////////////////////
-
-//		vo.setNo(authUser.getNo());
-//		userService.update(vo);
-//		
-//		authUser.setName(vo.getName());
-//		return "redirect:/";
-		
 //      1. SecurityContextHolder(Spring Security ThreadLocal Helper Class) 기반		
 //		SecurityContext sc = SecurityContextHolder.getContext();
 //		Authentication authentication = sc.getAuthentication();
-
 //      2. HttpSession 기반		
 //		SecurityContext sc = (SecurityContext)session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY)
 //		Authentication authentication = sc.getAuthentication();
@@ -156,13 +78,15 @@ public class UserController {
 		return "user/update";
 	}
 	
-
-//	@RequestMapping("/auth")
-//	public void auth() {
-//	}
-//
-//	@RequestMapping("/logout")
-//	public void logout() {
-//	}
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public String update(Authentication authentication, UserVo userVo) {
+		UserVo authUser = (UserVo)authentication.getPrincipal();
+		userVo.setNo(authUser.getNo());
+		
+		userService.update(userVo);
+		
+		authUser.setName(null);
+		return "redirect:/user/update";	}
 	
+
 }

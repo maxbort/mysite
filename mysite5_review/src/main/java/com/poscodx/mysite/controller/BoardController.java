@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
@@ -48,40 +48,34 @@ public class BoardController {
 		return "board/view";
 	}
 	
-	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete(HttpSession session,
+	public String delete(Authentication authentication,
 			@PathVariable("no") Long no,
 			@RequestParam(value="page", required=true, defaultValue="1") Integer page,
 			@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
-		// access control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-	
+		
+		UserVo authUser = (UserVo)authentication.getPrincipal();
+
 		boardService.deleteContents(no, authUser.getNo());
 		
 		return "redirect:/board?page=" + page + "&keyword="+keyword;
 	}
 	
 	
-	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)	
 	public String write(HttpSession session) {
 		
 		return "board/write";
 	}
 	
-	@Auth
 	@RequestMapping(value={"/write", "/reply"}, method=RequestMethod.POST)	
 	public String write(
-		HttpSession session,
+		Authentication authentication,
 		@ModelAttribute BoardVo vo,
 		@RequestParam(value="page", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 		// access control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		UserVo authUser = (UserVo)authentication.getPrincipal();
 		if(authUser == null) {
 			return "redirect:/";
 		}
@@ -94,34 +88,25 @@ public class BoardController {
 		return	"redirect:/board?page=" + page + "&kwd=" + keyword;
 	}
 	
-	@Auth
 	@RequestMapping("/modify/{no}")
-	public String modify(HttpSession session, @PathVariable("no") Long no, Model model) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
+	public String modify(Authentication authentication, @PathVariable("no") Long no, Model model) {
+		UserVo authUser = (UserVo)authentication.getPrincipal();
+				
 		BoardVo vo = boardService.getContents(no,authUser.getNo());
 		
 		model.addAttribute("vo",vo);
 		return "board/modify";
 	}
 	
-	@Auth
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
 	public String modify(
-			HttpSession session, 
+			Authentication authentication, 
 			BoardVo vo,
 			@RequestParam(value="page", required=true, defaultValue="1") Integer page,
 			@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {		
 			// access control
-			UserVo authUser = (UserVo)session.getAttribute("authUser");
-			if(authUser == null) {
-				return "redirect:/";
-			}
-			////////////////////////
+			UserVo authUser = (UserVo)authentication.getPrincipal();
+			
 			
 			vo.setUserNo(authUser.getNo());
 			boardService.updateContents(vo);
@@ -132,7 +117,6 @@ public class BoardController {
 	
 	
 	
-	@Auth
 	@RequestMapping("/reply/{no}")
 	public String reply(@PathVariable("no") Long no,
 			Model model) {

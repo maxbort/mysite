@@ -35,12 +35,13 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?page=${param.page }&kwd=${param.kwd }">글목록</a>
-					<c:if test="${ not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board/reply/${vo.no }?page=${param.page }&kwd=${param.kwd }">답글 달기</a>
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal" var="authUser"/>
+						<a href="${pageContext.request.contextPath }/board/reply/${boardVo.no }?p=${param.p }&kwd=${param.kwd }">답글달기</a>
 						<c:if test="${authUser.no == vo.userNo }">
 							<a href="${pageContext.request.contextPath }/board/modify/${vo.no }?page=${param.page }&kwd=${param.kwd }">글수정</a>
 						</c:if>
-					</c:if>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
