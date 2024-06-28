@@ -27,7 +27,7 @@ public class LocaleConfig {
 		messageSource.setBasename("com/poscodx/mysite/config/web/messages/message");
 		messageSource.setDefaultEncoding("utf-8");
 		
-		return messageSource();
+		return messageSource;
 	}
 
 }

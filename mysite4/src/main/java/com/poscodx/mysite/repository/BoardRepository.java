@@ -17,9 +17,9 @@ public class BoardRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-//	public BoardRepository(SqlSession sqlSession) {
-//		this.sqlSession = sqlSession;
-//	}
+	public BoardRepository(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 	
 	public int insert(BoardVo vo) {
 		
