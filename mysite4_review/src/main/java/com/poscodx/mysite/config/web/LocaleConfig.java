@@ -22,7 +22,7 @@ public class LocaleConfig {
 	
 	// Message Source
 	@Bean
-	public MessageSource messagSource() {
+	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasenames("com/poscodx/mysite/config/web/messages/message");
 		messageSource.setDefaultEncoding("utf-8");

@@ -16,12 +16,13 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-public class MvcConfig {
+public class MvcConfig implements WebMvcConfigurer{
 	
 	// View Resolver
 	@Bean
@@ -62,11 +63,14 @@ public class MvcConfig {
 		return messageConverter;
 	}
 
+	
+	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(stringHttpMessageConverter());
 		converters.add(mappingJackson2HttpMessageConverter());
 	}
-
+	
+	@Override
 	// Default Servlet Handler
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();

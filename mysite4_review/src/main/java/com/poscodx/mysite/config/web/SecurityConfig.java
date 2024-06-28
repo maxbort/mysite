@@ -8,6 +8,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.poscodx.mysite.security.AuthInterceptor;
 import com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver;
@@ -16,7 +17,7 @@ import com.poscodx.mysite.security.LogoutInterceptor;
 
 @Configuration
 @EnableWebMvc
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer{
 	
 	// Argument Resolver
 	@Bean
@@ -24,6 +25,7 @@ public class SecurityConfig {
 		return new AuthUserHandlerMethodArgumentResolver();
 	}
 	
+	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(handlerMethodArgumentResolver());
 	}
@@ -43,7 +45,8 @@ public class SecurityConfig {
 	public HandlerInterceptor authInterceptor() {
 		return new AuthInterceptor();
 	}
-
+	
+	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry
 			.addInterceptor(loginInterceptor())
