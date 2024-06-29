@@ -14,13 +14,7 @@
 			]]>
 		</selectKey>
 	</insert>
-	<select id="findByEmail2" parameterType="string" resultType="userdetails">
-		<![CDATA[
-		select no, name, email, password, role
-		  from user
-		 where email = #{email }
-		]]>
-	</select>
+	
 	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[
 		select no, name, role
@@ -37,9 +31,9 @@
 		 where no = #{no }
 		]]>
 	</select>
-	<select id="findByEmail" parameterType="string" resultType="uservo">
+	<select id="findByEmail" parameterType="string" resultType="userdetails">
 		<![CDATA[
-		select no, name, email, gender
+		select no, name, email, password, role
 		  from user
 		 where email = #{email }
 		]]>
