@@ -15,11 +15,12 @@ spring:
    # mvc            
    mvc:
       static-path-pattern: /assets/**
+      throw-excpetion-if-no-handler-found: true
       # view:
       #   prefix: /WEB-INF/views/
       #   suffix: .jsp
 
-   #web
+   # web
    web:
       resources:
          static-locations: file:/mysite-uploads/, classpath:assets/
