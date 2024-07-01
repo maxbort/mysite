@@ -10,7 +10,12 @@
 		<module>mysite2</module>
 		<module>mysite3</module>
 		<module>mysite4</module>
+		<module>mysite4_review</module>
+		<module>mysite5_review</module>
+		<module>mysite6_review</module>
+		<module>mysite7_review</module>
 		<module>mysite5</module>
+		<module>mysite7</module>
 	</modules>
 
 	<build>
