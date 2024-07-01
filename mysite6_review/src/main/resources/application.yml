@@ -53,12 +53,18 @@ mybatis:
    
 # server configuration
 server:
-   port: 8088
+   port: 8080
    servlet:
       context-path: /mysite6_review
       encoding:
          charset: utf-8
          enabled: true
+         
+   error:
+      whitelabel:
+         enabled: false
+      path: /error
+      
 # logging
 logging:
   config: classpath:logback.xml       
